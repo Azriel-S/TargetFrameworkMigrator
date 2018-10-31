@@ -154,8 +154,16 @@ namespace VSChangeTargetFrameworkExtension
         if (p.Properties == null) return projectModel;
 
         // not applicable for current project
-        if (p.Properties.Item("TargetFramework") == null ||
-            p.Properties.Item("TargetFrameworkMoniker") == null) return projectModel;
+        try
+        {
+            if (p.Properties.Item("TargetFramework") == null ||
+                p.Properties.Item("TargetFrameworkMoniker") == null)
+                return projectModel;
+        }
+        catch (ArgumentException)
+        {
+            return projectModel;
+        }
 
         try
         {
